@@ -1,0 +1,5 @@
+supplier_name,unit_price,currency,lead_time_days,payment_terms,remarks
+Good Supplier,10.00,USD,5,Net 30,This row is valid
+,9.50,USD,7,Net 30,Missing supplier name
+Cheap Castings,-4,USD,10,Net 30,Negative price
+Far Away Ltd,8.00,XYZ,ten,Net 30,Unknown currency and lead time is not a number

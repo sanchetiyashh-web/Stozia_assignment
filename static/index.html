@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supplier Quote Comparison</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Supplier Quote Comparison</h1>
+
+  <!-- ===================== RFQ list + create ===================== -->
+  <section id="rfq-list-section">
+    <h2>Create RFQ</h2>
+    <form id="rfq-form">
+      <label>Item name <input name="item_name" required></label>
+      <label>Material / specification <input name="specification" required></label>
+      <label>Quantity <input name="quantity" type="number" min="1" step="1" required></label>
+      <label>Delivery expectation <input name="delivery_expectation" placeholder="e.g. Within 30 days" required></label>
+      <label>Notes <textarea name="notes" rows="2"></textarea></label>
+      <button type="submit">Create RFQ</button>
+      <div class="message" id="rfq-form-message"></div>
+    </form>
+
+    <h2>RFQs</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th><th>Item</th><th>Specification</th><th>Quantity</th>
+          <th>Delivery expectation</th><th>Quotes</th><th></th>
+        </tr>
+      </thead>
+      <tbody id="rfq-table-body"></tbody>
+    </table>
+    <div class="message" id="rfq-list-message"></div>
+  </section>
+
+  <!-- ===================== One RFQ: details, comparison, add quotes ===================== -->
+  <section id="rfq-detail-section" hidden>
+    <button id="back-button" type="button">&larr; Back to all RFQs</button>
+    <h2 id="rfq-title"></h2>
+    <dl id="rfq-details"></dl>
+
+    <h3>Quote comparison</h3>
+    <p class="hint">Total price = unit price &times; RFQ quantity. The best quote (lowest total price) is highlighted.</p>
+    <div class="warning" id="currency-warning" hidden>
+      Quotes use different currencies, so they cannot be compared directly.
+      The best quote is highlighted separately for each currency.
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Supplier</th><th>Unit price</th><th>Currency</th><th>Total price</th>
+          <th>Lead time (days)</th><th>Payment terms</th><th>Remarks</th><th></th>
+        </tr>
+      </thead>
+      <tbody id="quote-table-body"></tbody>
+    </table>
+
+    <div class="two-columns">
+      <div>
+        <h3>Add a supplier quote</h3>
+        <form id="quote-form">
+          <label>Supplier name <input name="supplier_name" required></label>
+          <label>Unit price <input name="unit_price" type="number" min="0" step="any" required></label>
+          <label>Currency
+            <select name="currency" required>
+              <option>USD</option><option>EUR</option><option>GBP</option>
+              <option>INR</option><option>CNY</option><option>JPY</option>
+            </select>
+          </label>
+          <label>Lead time (days) <input name="lead_time_days" type="number" min="0" step="1" required></label>
+          <label>Payment terms <input name="payment_terms" placeholder="e.g. Net 30" required></label>
+          <label>Remarks <textarea name="remarks" rows="2"></textarea></label>
+          <button type="submit">Add quote</button>
+          <div class="message" id="quote-form-message"></div>
+        </form>
+      </div>
+
+      <div>
+        <h3>Import quotes from CSV</h3>
+        <form id="csv-form">
+          <p class="hint">
+            Header row required:<br>
+            <code>supplier_name,unit_price,currency,lead_time_days,payment_terms,remarks</code><br>
+            <code>remarks</code> is optional. If any row is invalid, nothing is imported.
+          </p>
+          <input name="file" type="file" accept=".csv" required>
+          <button type="submit">Import CSV</button>
+          <div class="message" id="csv-form-message"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
